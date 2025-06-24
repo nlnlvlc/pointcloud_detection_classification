@@ -1,0 +1,12 @@
+*.DS_Store
+*.zip
+*.gitattributes
+*.inc
+*.fcl
+*.est
+*.gt
+*.mat
+*.png
+*pose.txt
+data
+Datasets
