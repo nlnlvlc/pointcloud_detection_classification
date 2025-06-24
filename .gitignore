@@ -1,6 +1,7 @@
 *.DS_Store
 *.zip
-*.gitattributes
+.gitattributes
+.gitignore
 *.inc
 *.fcl
 *.est
