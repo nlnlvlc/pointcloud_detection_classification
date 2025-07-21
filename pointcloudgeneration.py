@@ -156,7 +156,7 @@ def generate_pc(path, intrin):
 
             pcd = o3d.geometry.PointCloud.create_from_rgbd_image(
                 rgbd_image,
-                intrinsics
+                intrinsics,
             )
 
             #o3d.visualization.draw_geometries([pcd])

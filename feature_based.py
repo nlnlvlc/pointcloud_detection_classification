@@ -12,7 +12,6 @@ def preprocess(pcd, nn, std_multiplier):
     pcd_center = pcd.get_center()
     pcd.translate(-pcd_center)
 
-
     #filter outliers
     filtered_pcd = pcd.remove_statistical_outlier(nn, std_multiplier)
     outliers = pcd.select_by_index(filtered_pcd[1], invert=True)

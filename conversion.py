@@ -106,6 +106,6 @@ def segConv(matFile, varName):
 
     #for name in names: print(f"Updated {name}: {python_dict[name][0]}")
 
-groundtruthConv()
+#groundtruthConv()
 
-allsplitConv()
+#allsplitConv()
