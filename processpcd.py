@@ -7,24 +7,31 @@ import numpy as np
 from PIL import Image
 import matplotlib.pyplot as plt
 import time
+import json
+import pandas as pd
 
 def get_groundtruth():
-    path = 'groundtruth.csv'
+    path = 'groundtruth.xlsx'
 
     # print("Getting paths from trainsplit")
     train_paths = []
     try:
-        with open(f"{path}", "r") as file:
+        df = pd.read_excel(path)
+        ''' with open(f"{path}", "r") as file:
             content = file.readlines()
 
             for line in content:
                 # con = line.split()
-                train_paths.append(str(line[14:-3]))
+                train_paths.append(str(line[14:-3]))'''
+
+
+        return df
 
     except FileNotFoundError:
         print(f"Error: The file {path} was not found.")
     except Exception as e:
         print(f"An error occurred: {e}")
+
 def get_trainsplit():
     path = 'trainsplit.csv'
 
@@ -240,6 +247,16 @@ def generate_pc(path):
     #print("Point Cloud generated")
     return pcd
 
+def generate_bb():
+    with open("annotations.json") as f:
+        annotations = json.load(f)
+
+    for box_data in annotations:
+        position = box_data["geometry"]["position"]  # Example: Accessing position data
+        orientation = box_data["geometry"]["orientation"]
+        dimensions = box_data["geometry"]["dimensions"]
+        class_name = box_data["className"]
+
 def load_data():
     #print("Loading data")
     trains_paths = get_trainsplit()
@@ -266,11 +283,25 @@ def load_data():
     execution_time = end_time - start_time
     print(f"Execution time: {execution_time:.4f} seconds")
 
-    #return train_pc, val_pc
+    return train_pc, val_pc
+
+def load_specific(path):
+    prefix = "data/"
+    #print("Loading data")
+    start_time = time.time()
+    #print("Generating Training Point Clouds")
+    pcd = generate_pc(prefix + path)
+
+    end_time = time.time()  # Record the end time
+    execution_time = end_time - start_time
+    print(f"Execution time: {execution_time:.4f} seconds")
+
+    return pcd
 
 def main():
 
-    pass
+    gt = get_groundtruth()
+    print(gt)
     #load_data()
 
 if __name__ == "__main__":

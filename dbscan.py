@@ -1,14 +1,17 @@
 import open3d as o3d
 import numpy as np
+import  bb
+import processpcd as pr
+import matplotlib.pyplot as plt
 
 # Create a sample point cloud (or load from a file)
-pcd = o3d.geometry.PointCloud()
-points = np.random.rand(1000, 3) * 10
-pcd.points = o3d.utility.Vector3dVector(points)
+
+groundtruth = bb.get_groundtruth()
+pcd = pr.load_specific(groundtruth['sequenceName'][500])
 
 # DBSCAN parameters
-eps = 0.5
-min_points = 10
+eps = 0.05
+min_points = 75
 
 # Apply DBSCAN
 labels = np.array(pcd.cluster_dbscan(eps=eps, min_points=min_points, print_progress=True))
