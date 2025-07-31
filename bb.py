@@ -1,14 +1,12 @@
-import json
-import pandas as pd
-import time
-
-import matplotlib.pyplot as plt
-
-import processpcd as pr
-import open3d as o3d
-import numpy as np
 import ast
-
+import json
+import time
+import random
+import numpy as np
+import pandas as pd
+import open3d as o3d
+import matplotlib.pyplot as plt
+import processpcd as pr
 
 def look_json():
     print(f"opening json")
@@ -61,11 +59,16 @@ def clean_list(original_list):
             cleaned.append([eval(x) for x in split])
         return cleaned
 
+def pcd_from_groundtruth(groundtruth, num):
+    pcd = pr.load_specific(groundtruth['sequenceName'][num])
+
+    return pcd
+
 def main():
     groundtruth = get_groundtruth()
 
-    example = pr.load_specific(groundtruth['sequenceName'][0])
-
+    selection = random.randint(0, len(groundtruth))
+    example = pcd_from_groundtruth(groundtruth, 0)
 
     center = clean_list(groundtruth['centroid'][0])
     extent = clean_list(groundtruth['orientation'][0])
